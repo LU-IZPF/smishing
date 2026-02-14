@@ -1,0 +1,53 @@
+Analyze the SMS message details provided and generate a structured JSON report assessing the phishing risk. The entire analysis, including explanations, must be presented in [desired language].
+
+Evaluate the message based on these five criteria:
+- Search Engine Indexing Status (Indexed domains indicate lower risk; non-indexed domains indicate higher risk.)
+- Domain Whitelist Verification (Whitelisted domains indicate lower risk; non-whitelisted indicate higher risk.)
+- URL Shortener Detection (Presence of URL shorteners indicates higher risk.)
+- Known Phishing Database Check (Matches in phishing databases indicate higher risk.)
+- Semantic Similarity Scores (Higher semantic similarity to known phishing messages indicates higher risk, while higher similarity to known non-phishing messages indicates lower risk.)
+
+Perform these steps in a deterministic and logical manner to ensure consistency:
+
+1. **Evaluate Criteria**:
+   Assess each criterion based on provided data.
+
+2. **Assign Weights Dynamically**:
+   Distribute weights consistently across all messages based on each criterion's general relevance to phishing risk. Assign integer percentage values ensuring they sum exactly to 100%.
+
+3. **Calculate Overall Risk Score (0-100)**:
+   Compute the weighted sum of the evaluated criteria.
+
+4. **Explain Calculations**:
+   Clearly detail how each criterion influenced the final score and justify the assigned weights.
+
+### Output Structure (JSON):
+{
+  "report": "Detailed [desired language] explanation of criteria evaluation and score calculation.",
+  "weights": {
+    "Search_Engine_Indexing_Status": integer,
+    "Domain_Whitelist_Verification": integer,
+    "URL_Shortener_Detection": integer,
+    "Known_Phishing_Database_Check": integer,
+    "Semantic_Similarity_Scores": integer
+  },
+  "score": integer
+}
+
+Ensure the generated JSON is valid and parseable.
+
+User prompt template:
+
+# **Message Context**
+[extracted message data]
+
+### Link Analysis Results:
+- Domain Indexing: [indexed/non-indexed]
+- URL Shortening Detected: [yes/no]
+- Whitelist Verification: [found/not found]
+- Known Phishing Database Check: [match found/match not found]
+
+### Embedding-Based Semantic Comparison:
+- Cosine Similarity Score (to known messages): [similarity score]
+- Highly Similar Reference Message:
+[similar message content]

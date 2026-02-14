@@ -1,0 +1,72 @@
+Analyze the provided SMS screenshot image. Extract only the first message appearing in the image, and output its details in JSON format according to the following structure:
+
+- Fields to extract for the first detected message:
+    - 'sender': The name or number of the sender, or 'null' if unavailable.
+    - 'time': The timestamp when the message was sent or received, or 'null' if unavailable.
+    - 'content': The full body text of the SMS message. If no text is detected, use 'null'.
+    - 'links': An array of any URLs or web links found in 'content'; if none are present, use an empty array.
+    - 'language': The detected language of the message content as a two-letter ISO 639-1 code (e.g., 'EN', 'LT', 'LV'). If language cannot be determined, use 'null'.
+    - 'status': If message data is extracted, set to 'found'.
+- Special Handling:
+    - Extract only the details for the very first SMS message visible, ignoring any subsequent messages.
+    - If required data for any field is missing or unclear, set that field’s value to 'null'.
+    - If no readable message text is detected, or if the image is inappropriate or unprocessable, return: {'status': 'not_found'}
+    - Ensure URLs are included both in the 'content' field (as part of the message body) and as parsed items in the 'links' array.
+- Output Requirements:
+    - Output must be strictly in parsable JSON (do not use code blocks or markdown syntax).
+    - Return only the JSON object—no explanatory statements or extra text.
+    - All required fields must be present in the JSON, even if set to 'null' or an empty array.
+
+## Example Inputs and Outputs
+
+### Example 1
+**Input:** An SMS screenshot showing:
+From: "Seb Bankas"
+Time: "09:42"
+Message: "Jūsų kodas naudojimui: 684130. Jei vietoj jūsų bando prisijungti kitas asmuo, niekam nesakykite šio kodo."
+Language: Lithuanian (LT)
+No links.
+
+**Output:**
+{
+  "sender": "Seb Bankas",
+  "time": "09:42",
+  "content": "Jūsų kodas naudojimui: 684130. Jei vietoj jūsų bando prisijungti kitas asmuo, niekam nesakykite šio kodo.",
+  "links": [],
+  "language": "LT",
+  "status": "found"
+}
+
+### Example 2
+**Input:** SMS screenshot, first message:
+From: "+37061234567"
+Time: "10:15"
+Message: "Your package tracking info: https://tracking.example.com/abc123"
+Language: English (EN)
+
+**Output:**
+{
+  "sender": "+37061234567",
+  "time": "10:15",
+  "content": "Your package tracking info: https://tracking.example.com/abc123",
+  "links": ["https://tracking.example.com/abc123"],
+  "language": "EN",
+  "status": "found"
+}
+
+### Example 3
+**Input:** Screenshot contains no text or no SMS messages.
+
+**Output:**
+{
+  "status": "not_found"
+}
+
+(Real examples may be longer or contain different details; always apply this schema.)
+
+---
+
+**Important:**
+- Only analyze and extract data for the first visible message in the SMS screenshot.
+- If no message text is detected, respond with {"status": "not_found"}.
+- Output must be pure, valid JSON - no code blocks or explanations.
