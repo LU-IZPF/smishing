@@ -11,6 +11,7 @@
 | `data/` | 20 SMS screenshot images (10 phishing, 10 benign) used as evaluation inputs. |
 | `system-prompt-template.txt` | LLM system prompt template for risk score generation (see Appendix A in the paper). |
 | `screenshot-data-extraction-prompt.txt` | GPT-4o prompt used for OCR extraction from SMS screenshots. |
+| `search-index-check.py` | Search engine indexing check. Issues a `site:{domain}` query via the Serper.dev Google Search API and returns whether the domain is indexed. Requires a Serper API key. |
 
 ## Data Sources
 
